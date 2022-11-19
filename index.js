@@ -24,7 +24,7 @@ app.use(express.json());
 //change to config files
 mongoose.connect(process.env.mongoURL).then((res) => {
   console.log("mongodb connected")
-})
+}).catch(err=>console.log(err))
 
 
 
