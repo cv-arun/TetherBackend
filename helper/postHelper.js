@@ -1,6 +1,6 @@
 const postModel = require('../model/postModel');
 const userModel = require('../model/userModel')
-const socketServer = require('../socketServer')
+
 
 module.exports = {
 
