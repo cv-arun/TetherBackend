@@ -6,8 +6,8 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const http = require("http");
 const fileupload=require('express-fileupload');
-const socketServer=require('./socketServer')
-const {Server} =require('socket.io');
+
+
 
 const userRouter=require('./router/user');
 const postRouter=require('./router/post')
@@ -28,16 +28,7 @@ mongoose.connect(process.env.mongoURL).then((res) => {
   console.log("mongodb connected")
 })
 
-const io = new Server(server, {
-  cors: {
-    origin: "http://localhost:3000",
-    methods: ["GET", "POST"],
-  },
-});
 
-io.on('connection',(socket)=>{
-  socketServer(socket)
-})
 
 app.use(fileupload({
   useTempFiles:true
