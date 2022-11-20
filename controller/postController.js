@@ -116,7 +116,7 @@ const uploadToCouldinary = (file, path) => {
 
 const removeTmp = (path) => {
   fs.unlink(path, (err) => {
-    if (err) throw err;
+    if (err) console.log(err);
   });
 };
 
