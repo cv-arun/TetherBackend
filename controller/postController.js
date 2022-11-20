@@ -59,10 +59,12 @@ exports.removeCommenent = (req, res, next) => {
 
 
 exports.uploadImages = async (req, res) => {
+  console.log(req.files,'files')
   try {
     let { profile, caption, privacy } = req.body
     let path = `${req.userId}/images`
     let files = req.files ? Object.values(req.files).flat() : null;
+    
     let images = [];
     if (files) {
       for (const file of files) {
