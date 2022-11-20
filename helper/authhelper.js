@@ -23,14 +23,13 @@ const authHelper = {
 
                 }
                 ).then((response) => {
-                    console.log(response, 'response')
+                 
                     const user = {
                         userId: response._id,
                         name: response.first_name,
                         picture: response.picture
                     }
 
-                    console.log(user, 'user')
                     resolve(user)
                 }).catch(err => reject(err))
             } else {
@@ -49,7 +48,7 @@ const authHelper = {
 
     },
     dologin: (loginData) => {
-        console.log(loginData)
+  
         return new Promise((resolve, reject) => {
 
             userModel.findOne({ email: loginData.email }).then((userData) => {
@@ -101,9 +100,8 @@ const authHelper = {
               
               let match=await  bcrypt.compare(data.currentPassword, user.password)
             if(match){
-                console.log(match,'match')
+               
                 let newPassword=await bcrypt.hash(data.newPassword,10)
-                console.log(newPassword,'dagaaaaaaaaaaaaaaa')
                 let result=await userModel.findByIdAndUpdate(userId,{password:newPassword})
                 resolve({text:'password updated',color:'text-green-700'})
 

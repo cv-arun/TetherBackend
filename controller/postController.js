@@ -85,19 +85,20 @@ exports.uploadImages = async (req, res) => {
         });
 
   } catch (error) {
+    console.log(err)
     return res.status(500).json({ message: error.message });
   }
 };
 
 const uploadToCouldinary = (file, path) => {
-  return new Promise((resolve) => {
+  return new Promise((resolve,reject) => {
     cloudinary.v2.uploader.upload(
       file.tempFilePath, {
       folder: path
     }, (err, res) => {
       if (err) {
         removeTmp(file.tempFilePath)
-        res.status(400).json({ messge: "image upload failed" })
+        reject(err)
       }
       resolve({
         url: res.secure_url
