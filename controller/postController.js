@@ -66,6 +66,7 @@ exports.uploadImages = async (req, res) => {
     let images = [];
     if (files) {
       for (const file of files) {
+        console.log('1')
         const url = await uploadToCouldinary(file, path);
         images.push(url);
         removeTmp(file.tempFilePath)
@@ -92,6 +93,7 @@ exports.uploadImages = async (req, res) => {
 
 const uploadToCouldinary = (file, path) => {
   return new Promise((resolve,reject) => {
+    console.log('2')
     cloudinary.v2.uploader.upload(
       file.tempFilePath, {
       folder: path
@@ -100,6 +102,7 @@ const uploadToCouldinary = (file, path) => {
         removeTmp(file.tempFilePath)
         reject(err)
       }
+      console.log('3')
       resolve({
         url: res.secure_url
       })
