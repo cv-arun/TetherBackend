@@ -59,27 +59,27 @@ exports.removeCommenent = (req, res, next) => {
 
 
 exports.uploadImages = async (req, res) => {
-  console.log(req.files,'files')
+  
   try {
-    let { profile, caption, privacy } = req.body
-    let path = `${req.userId}/images`
-    let files = req.files ? Object.values(req.files).flat() : null;
+    let {url, profile, caption, privacy } = req.body
+    // let path = `${req.userId}/images`
+    // let files = req.files ? Object.values(req.files).flat() : null;
     
-    let images = [];
-    if (files) {
-      for (const file of files) {
-        console.log('1')
-        const url = await uploadToCouldinary(file, path);
-        images.push(url);
-        removeTmp(file.tempFilePath)
-      }
+    // let images = [];
+    // if (files) {
+    //   for (const file of files) {
+    //     console.log('1')
+    //     const url = await uploadToCouldinary(file, path);
+    //     images.push(url);
+    //     removeTmp(file.tempFilePath)
+    //   }
 
-    }
+    // }
 
-    profile == true ? userHelper.updateProfile(req.userId, images).then(data => {
+    profile == true ? userHelper.updateProfile(req.userId, url).then(data => {
       res.json({ msg: 'profile updated' })
     }) :
-      postHelper.updataPostDetails(profile, caption, images, req.userId, privacy).
+      postHelper.updataPostDetails(profile, caption,url, req.userId, privacy).
         then(data => {
          
           postHelper.setPostNotification(req.userId,data._id)
@@ -93,31 +93,31 @@ exports.uploadImages = async (req, res) => {
   }
 };
 
-const uploadToCouldinary = (file, path) => {
-  return new Promise((resolve,reject) => {
+// const uploadToCouldinary = (file, path) => {
+//   return new Promise((resolve,reject) => {
   
-    cloudinary.v2.uploader.upload(
-      file.tempFilePath, {
-      folder: path
-    }, (err, res) => {
-      if (err) {
-        removeTmp(file.tempFilePath)
-        reject(err)
-      }
+//     cloudinary.v2.uploader.upload(
+//       file.tempFilePath, {
+//       folder: path
+//     }, (err, res) => {
+//       if (err) {
+//         removeTmp(file.tempFilePath)
+//         reject(err)
+//       }
     
-      resolve({
-        url: res.secure_url
-      })
-    }
-    )
-  })
-}
+//       resolve({
+//         url: res.secure_url
+//       })
+//     }
+//     )
+//   })
+// }
 
 
-const removeTmp = (path) => {
-  fs.unlink(path, (err) => {
-    if (err) console.log(err);
-  });
-};
+// const removeTmp = (path) => {
+//   fs.unlink(path, (err) => {
+//     if (err) console.log(err);
+//   });
+// };
 
 
