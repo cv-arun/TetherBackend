@@ -95,7 +95,7 @@ exports.uploadImages = async (req, res) => {
 
 const uploadToCouldinary = (file, path) => {
   return new Promise((resolve,reject) => {
-    console.log('2')
+  
     cloudinary.v2.uploader.upload(
       file.tempFilePath, {
       folder: path
@@ -104,7 +104,7 @@ const uploadToCouldinary = (file, path) => {
         removeTmp(file.tempFilePath)
         reject(err)
       }
-      console.log('3')
+    
       resolve({
         url: res.secure_url
       })
