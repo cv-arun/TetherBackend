@@ -49,19 +49,12 @@ exports.removeCommenent = (req, res, next) => {
 }
 
 
-
-
-
-
-
-
-
-
-
 exports.uploadImages = async (req, res) => {
   
   try {
     let {url, profile, caption, privacy } = req.body
+   
+    console.log(req.body,'body.....................')
     // let path = `${req.userId}/images`
     // let files = req.files ? Object.values(req.files).flat() : null;
     
@@ -75,6 +68,7 @@ exports.uploadImages = async (req, res) => {
     //   }
 
     // }
+   
 
     profile == true ? userHelper.updateProfile(req.userId, url).then(data => {
       res.json({ msg: 'profile updated' })
@@ -86,6 +80,7 @@ exports.uploadImages = async (req, res) => {
             .then(data => console.log(data,'after noti'))
           res.json({ msg: 'db updated' })
         });
+   
 
   } catch (error) {
     console.log(err)
