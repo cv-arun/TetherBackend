@@ -40,8 +40,8 @@ const authHelper = {
                     picture: user.picture,
                     lastName: user.last_name,
                     DOB: user.DOB,
-                    followers: userData.followers?.length,
-                    following: userData.following?.length
+                    followers: user.followers?.length,
+                    following: user.following?.length
                 })
             }
 
