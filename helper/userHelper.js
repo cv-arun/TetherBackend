@@ -92,13 +92,16 @@ const userHelper = {
         return new Promise(async (resolve, reject) => {
             try {
                 let userData = await userModel.findById(userId)
+               
                 let user = {
                     userId: userData._id,
                     name: userData.first_name,
                     lastName: userData.last_name,
                     picture: userData.picture,
                     bio: userData.details?.bio,
-                    DOB: userData.DOB
+                    DOB: userData.DOB,
+                    followers:userData.followers.length,
+                    following:userData.following.length
                 }
                 resolve(user)
             } catch (err) {
