@@ -23,7 +23,7 @@ const authHelper = {
 
                 }
                 ).then((response) => {
-                 
+
                     const user = {
                         userId: response._id,
                         name: response.first_name,
@@ -39,7 +39,9 @@ const authHelper = {
                     name: user.first_name,
                     picture: user.picture,
                     lastName: user.last_name,
-                    DOB: user.DOB
+                    DOB: user.DOB,
+                    followers: userData.followers.length,
+                    following: userData.following.length
                 })
             }
 
@@ -48,7 +50,7 @@ const authHelper = {
 
     },
     dologin: (loginData) => {
-  
+
         return new Promise((resolve, reject) => {
 
             userModel.findOne({ email: loginData.email }).then((userData) => {
@@ -65,7 +67,9 @@ const authHelper = {
                                     lastName: userData.last_name,
                                     picture: userData.picture,
                                     bio: userData.details?.bio,
-                                    DOB: userData.DOB
+                                    DOB: userData.DOB,
+                                    followers: userData.followers.length,
+                                    following: userData.following.length
                                 }
                             }
                             user.token = generateToken({
@@ -96,19 +100,19 @@ const authHelper = {
     updatePassword: (userId, data) => {
         return new Promise(async (resolve, reject) => {
             try {
-                let user=await userModel.findById(userId)
-              
-              let match=await  bcrypt.compare(data.currentPassword, user.password)
-            if(match){
-               
-                let newPassword=await bcrypt.hash(data.newPassword,10)
-                let result=await userModel.findByIdAndUpdate(userId,{password:newPassword})
-                resolve({text:'password updated',color:'text-green-700'})
+                let user = await userModel.findById(userId)
 
-            }else{
-                resolve({text:'enterd wrong credentials',color:'text-red-700'})
-            }
-               
+                let match = await bcrypt.compare(data.currentPassword, user.password)
+                if (match) {
+
+                    let newPassword = await bcrypt.hash(data.newPassword, 10)
+                    let result = await userModel.findByIdAndUpdate(userId, { password: newPassword })
+                    resolve({ text: 'password updated', color: 'text-green-700' })
+
+                } else {
+                    resolve({ text: 'enterd wrong credentials', color: 'text-red-700' })
+                }
+
             } catch (err) {
                 reject(err)
             }
