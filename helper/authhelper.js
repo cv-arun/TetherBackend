@@ -50,7 +50,7 @@ const authHelper = {
 
     },
     dologin: (loginData) => {
-
+        console.log(loginData)
         return new Promise((resolve, reject) => {
 
             userModel.findOne({ email: loginData.email }).then((userData) => {

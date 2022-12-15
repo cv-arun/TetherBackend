@@ -11,6 +11,7 @@ module.exports = {
         }).catch(err=>res.json(err))
     },
     login:(req,res,next)=>{
+      
         authhelper.dologin(req.body).then((user) => {
 
             if (user.token) {
