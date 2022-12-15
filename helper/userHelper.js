@@ -8,7 +8,7 @@ const userHelper = {
                 var user = await userModel.findById(myId)
             } catch { err => reject(err) }
 
-            userModel.find({ _id: { $nin: [...user?.following, myId] } }, { password: 0 }).then(data => {
+            userModel.find({ _id: { $nin: [...user?.following, myId] } },{first_name:1,last_name:1,email:1,picture:1}).then(data => {
                 resolve(data)
             }).catch(err => reject(err))
         })
