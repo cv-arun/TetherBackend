@@ -22,6 +22,8 @@ router.post('/updateProfile',verify,userController.changeProfile)
 router.post('/updateProfileData',verify,userController.editProfile)
 router.get('/refreshUSer',verify,userController.refreshUser)
 router.get('/getNotification',verify,userController.getNotification)
+router.post('/getFriendDetails',verify,userController.getFriendDetails)
+router.post('/getFriendPostDetails',verify,userController.getFriendPostDetails)
 
 
 
