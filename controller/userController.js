@@ -1,4 +1,5 @@
-const userHelper = require('../helper/userHelper')
+const userHelper = require('../helper/userHelper');
+const postHelper=require('../helper/postHelper')
 
 
 module.exports = {
@@ -57,5 +58,20 @@ module.exports = {
         userHelper.getNotification(req.userId).then(data=>{
             res.json(data)
         })
+    }
+    ,
+    getFriendDetails:(req,res,next)=>{
+        userHelper.refreshUSer(req.body.userId).then(data =>{
+           
+            res.json(data)
+        }).catch(err=>res.json(err))
+    }
+    ,
+    getFriendPostDetails:(req,res,next)=>{
+       
+        postHelper.getAllPost(req.body.userId, true).then(data => {
+          
+            res.json(data)
+          }).catch(err => res.json(err))
     }
 }
