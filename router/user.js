@@ -24,6 +24,7 @@ router.get('/refreshUSer',verify,userController.refreshUser)
 router.get('/getNotification',verify,userController.getNotification)
 router.post('/getFriendDetails',verify,userController.getFriendDetails)
 router.post('/getFriendPostDetails',verify,userController.getFriendPostDetails)
+router.post('/searchUser',verify,userController.searchUser)
 
 
 

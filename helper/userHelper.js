@@ -8,7 +8,7 @@ const userHelper = {
                 var user = await userModel.findById(myId)
             } catch { err => reject(err) }
 
-            userModel.find({ _id: { $nin: [...user?.following, myId] } },{first_name:1,last_name:1,email:1,picture:1}).then(data => {
+            userModel.find({ _id: { $nin: [...user?.following, myId] } }, { first_name: 1, last_name: 1, email: 1, picture: 1 }).then(data => {
                 resolve(data)
             }).catch(err => reject(err))
         })
@@ -45,7 +45,7 @@ const userHelper = {
 
     getFollow: (myId) => {
         return new Promise((resolve, reject) => {
-            userModel.findById(myId, { followers: 1, following: 1 }).populate('following').populate('followers').then(data => {
+            userModel.findById(myId, { followers: 1, following: 1 }).populate('following', 'first_name last_name picture').populate('followers', 'first_name last_name picture').then(data => {
                 resolve(data)
             }).catch(err => reject(err))
         })
@@ -92,7 +92,7 @@ const userHelper = {
         return new Promise(async (resolve, reject) => {
             try {
                 let userData = await userModel.findById(userId)
-               
+
                 let user = {
                     userId: userData._id,
                     name: userData.first_name,
@@ -100,8 +100,8 @@ const userHelper = {
                     picture: userData.picture,
                     bio: userData.details?.bio,
                     DOB: userData.DOB,
-                    followers:userData.followers.length,
-                    following:userData.following.length
+                    followers: userData.followers.length,
+                    following: userData.following.length
                 }
                 resolve(user)
             } catch (err) {
@@ -112,8 +112,18 @@ const userHelper = {
     getNotification: (userId) => {
         return new Promise(async (resolve, reject) => {
             try {
-                let user = await userModel.findById(userId, { notifications: 1 }).populate('notifications.friend','first_name picture')
+                let user = await userModel.findById(userId, { notifications: 1 }).populate('notifications.friend', 'first_name picture')
                 resolve(user)
+            } catch (err) {
+                reject(err)
+            }
+        })
+    },
+    getUsers: (text) => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                let users = await userModel.find({ first_name: { $regex: `(?i)${text}` } }, { first_name: 1, picture: 1,last_name:1 })
+                resolve(users)
             } catch (err) {
                 reject(err)
             }

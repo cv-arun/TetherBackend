@@ -74,4 +74,12 @@ module.exports = {
             res.json(data)
           }).catch(err => res.json(err))
     }
+    ,
+    searchUser:(req,res,next)=>{
+       
+        userHelper.getUsers(req.body.text).then(data =>{
+           console.log(data)
+            res.json(data)
+        }).catch(err=>res.json(err))
+    }
 }
