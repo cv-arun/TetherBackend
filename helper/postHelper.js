@@ -19,7 +19,7 @@ module.exports = {
     getAllPost: (userId, mypost) => {
         return new Promise(async (resolve, reject) => {
             if (mypost) {
-                postModel.find({ user: userId }).sort('-createdAt').populate('user').populate('comments.commentBy').then(data => {
+                postModel.find({ user: userId }).sort('-createdAt').populate('user','first_name last_name picture').populate('comments.commentBy','first_name last_name picture').then(data => {
                     resolve(data)
                 }).catch(err => reject(err))
             } else {
@@ -27,7 +27,7 @@ module.exports = {
                     let user = await userModel.findById(userId);
 
                     let data = await postModel.find({ $or: [{ user: { $in: [...user.following, userId] } }, { privacy: 'public' }] })
-                        .sort('-createdAt').populate('user').populate('comments.commentBy')
+                        .sort('-createdAt').populate('user','first_name last_name picture').populate('comments.commentBy','first_name last_name picture')
                     resolve(data)
 
                 } catch (err) {
