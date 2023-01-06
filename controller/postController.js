@@ -19,6 +19,14 @@ exports.getPost = (req, res, next) => {
   }).catch(err => res.json(err))
 
 }
+exports.getPostChunks = (req, res, next) => {
+
+console.log(req.body.skip)
+  postHelper.getPostChunks(req.userId,false,req.body.skip).then(data => {
+    res.json(data)
+  }).catch(err => res.json(err))
+
+}
 exports.getMyPost = (req, res, next) => {
 
   postHelper.getAllPost(req.userId, true).then(data => {
@@ -88,31 +96,5 @@ exports.uploadImages = async (req, res) => {
   }
 };
 
-// const uploadToCouldinary = (file, path) => {
-//   return new Promise((resolve,reject) => {
-  
-//     cloudinary.v2.uploader.upload(
-//       file.tempFilePath, {
-//       folder: path
-//     }, (err, res) => {
-//       if (err) {
-//         removeTmp(file.tempFilePath)
-//         reject(err)
-//       }
-    
-//       resolve({
-//         url: res.secure_url
-//       })
-//     }
-//     )
-//   })
-// }
-
-
-// const removeTmp = (path) => {
-//   fs.unlink(path, (err) => {
-//     if (err) console.log(err);
-//   });
-// };
 
 

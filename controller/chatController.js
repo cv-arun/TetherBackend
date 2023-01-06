@@ -20,5 +20,10 @@ module.exports = {
         chatHelper.registerOffline(req.body.userId).then(data=>{
             res.json(data)
         }).catch(err=>res.json(err))
+   },
+   registerOfflineBysocketId: (req, res, next) => {
+        chatHelper.registerOffline(req.body.socketId).then(data=>{
+            res.json(data)
+        }).catch(err=>res.json(err))
    }
 }
