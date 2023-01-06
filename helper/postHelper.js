@@ -36,6 +36,28 @@ module.exports = {
             }
         })
     },
+    getPostChunks: (userId, mypost,skip) => {
+        return new Promise(async (resolve, reject) => {
+            if (mypost) {
+                postModel.find({ user: userId }).sort('-createdAt').populate('user','first_name last_name picture').populate('comments.commentBy','first_name last_name picture').then(data => {
+                    resolve(data)
+                }).catch(err => reject(err))
+            } else {
+                try {
+                    
+                    let user = await userModel.findById(userId);
+
+                    let data = await postModel.find({ $or: [{ user: { $in: [...user.following, userId] } }, { privacy: 'public' }] })
+                        .sort('-createdAt').populate('user','first_name last_name picture').populate('comments.commentBy','first_name last_name picture').skip(skip).limit(5)
+                    resolve(data)
+
+                } catch (err) {
+                    reject(err)
+                }
+            }
+        })
+    },
+    
     hitLike: (userId, postId) => {
         return new Promise(async (resolve, reject) => {
             try {

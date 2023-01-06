@@ -19,6 +19,14 @@ exports.getPost = (req, res, next) => {
   }).catch(err => res.json(err))
 
 }
+exports.getPostChunks = (req, res, next) => {
+
+console.log(req.body.skip)
+  postHelper.getPostChunks(req.userId,false,req.body.skip).then(data => {
+    res.json(data)
+  }).catch(err => res.json(err))
+
+}
 exports.getMyPost = (req, res, next) => {
 
   postHelper.getAllPost(req.userId, true).then(data => {
@@ -62,20 +70,7 @@ exports.uploadImages = async (req, res) => {
   
   try {
     let {url, profile, caption, privacy } = req.body
-    // let path = `${req.userId}/images`
-    // let files = req.files ? Object.values(req.files).flat() : null;
-    
-    // let images = [];
-    // if (files) {
-    //   for (const file of files) {
-    //     console.log('1')
-    //     const url = await uploadToCouldinary(file, path);
-    //     images.push(url);
-    //     removeTmp(file.tempFilePath)
-    //   }
-
-    // }
-
+   
     profile == true ? userHelper.updateProfile(req.userId, url).then(data => {
       res.json({ msg: 'profile updated' })
     }) :
@@ -93,31 +88,5 @@ exports.uploadImages = async (req, res) => {
   }
 };
 
-// const uploadToCouldinary = (file, path) => {
-//   return new Promise((resolve,reject) => {
-  
-//     cloudinary.v2.uploader.upload(
-//       file.tempFilePath, {
-//       folder: path
-//     }, (err, res) => {
-//       if (err) {
-//         removeTmp(file.tempFilePath)
-//         reject(err)
-//       }
-    
-//       resolve({
-//         url: res.secure_url
-//       })
-//     }
-//     )
-//   })
-// }
-
-
-// const removeTmp = (path) => {
-//   fs.unlink(path, (err) => {
-//     if (err) console.log(err);
-//   });
-// };
 
 

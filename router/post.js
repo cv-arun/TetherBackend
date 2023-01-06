@@ -10,6 +10,7 @@ router.get('/getMyPost',verify,postController.getMyPost)
 router.post('/hitLike',verify,postController.hitLike)
 router.post('/sendCommnet',verify,postController.addCommnent)
 router.post('/removeCommenent',verify,postController.removeCommenent)
+router.post('/getPostChunks',verify,postController.getPostChunks)
 
 
 

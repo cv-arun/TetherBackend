@@ -71,6 +71,7 @@ const userHelper = {
             }
         })
     },
+    
     EditProfile: (userId, data) => {
         return new Promise(async (resolve, reject) => {
             try {

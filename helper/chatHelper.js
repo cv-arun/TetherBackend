@@ -52,5 +52,15 @@ module.exports = {
                 reject(err)
             }
         })
+    },
+    registerOfflineBysocketId: (SocketId) => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                let data = await userModel.findOneAndUpdate({SocketId},{isOnline:false,lastActive:new Date()})
+                resolve(data)
+            } catch (err) {
+                reject(err)
+            }
+        })
     }
 }
