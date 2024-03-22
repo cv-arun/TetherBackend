@@ -36,7 +36,9 @@ module.exports = {
             }
         })
     },
-    getPostChunks: (userId, mypost,skip) => {
+    getPostChunks: (userId, mypost,page) => {
+        const limit = 5
+        const skip = page * limit - limit
         return new Promise(async (resolve, reject) => {
             if (mypost) {
                 postModel.find({ user: userId }).sort('-createdAt').populate('user','first_name last_name picture').populate('comments.commentBy','first_name last_name picture').then(data => {
@@ -48,7 +50,7 @@ module.exports = {
                     let user = await userModel.findById(userId);
 
                     let data = await postModel.find({ $or: [{ user: { $in: [...user.following, userId] } }, { privacy: 'public' }] })
-                        .sort('-createdAt').populate('user','first_name last_name picture').populate('comments.commentBy','first_name last_name picture').skip(skip).limit(5)
+                        .sort('-createdAt').populate('user','first_name last_name picture').populate('comments.commentBy','first_name last_name picture').skip(skip).limit(limit)
                     resolve(data)
 
                 } catch (err) {

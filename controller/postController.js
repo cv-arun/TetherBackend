@@ -19,10 +19,10 @@ exports.getPost = (req, res, next) => {
   }).catch(err => res.json(err))
 
 }
-exports.getPostChunks = (req, res, next) => {
 
-console.log(req.body.skip)
-  postHelper.getPostChunks(req.userId,false,req.body.skip).then(data => {
+exports.getPostChunks = (req, res, next) => {
+console.log(req.params.page,"page params")
+  postHelper.getPostChunks(req.userId,false,req.params.page).then(data => {
     res.json(data)
   }).catch(err => res.json(err))
 
