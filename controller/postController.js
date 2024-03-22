@@ -21,8 +21,9 @@ exports.getPost = (req, res, next) => {
 }
 
 exports.getPostChunks = (req, res, next) => {
-console.log(req.params.page,"page params")
-  postHelper.getPostChunks(req.userId,false,req.params.page).then(data => {
+   const page = req.params.page || 1
+   const limit = req.params.limit || 5
+  postHelper.getPostChunks(req.userId,false,page,limit).then(data => {
     res.json(data)
   }).catch(err => res.json(err))
 

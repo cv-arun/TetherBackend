@@ -36,8 +36,7 @@ module.exports = {
             }
         })
     },
-    getPostChunks: (userId, mypost,page) => {
-        const limit = 5
+    getPostChunks: (userId, mypost,page,limit=5) => {
         const skip = page * limit - limit
         return new Promise(async (resolve, reject) => {
             if (mypost) {
